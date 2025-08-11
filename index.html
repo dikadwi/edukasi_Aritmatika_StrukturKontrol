@@ -756,7 +756,7 @@
       <div class="logo" aria-hidden="true"></div>
       <div class="title">
         <h1>Kalkulator & Struktur Kontrol</h1>
-        <p>Operasi Aritmatika + Percabangan • Perulangan • Try/Catch </p>
+        <p>Operasi Aritmatika + Percabangan • Perulangan • Try/Catch</p>
       </div>
     </header>
 
@@ -769,40 +769,46 @@
     <!-- TAB: Materi/Penjelasan -->
     <section id="tab-intro" class="grid" role="tabpanel" aria-selected="true" aria-labelledby="Materi">
       <div class="card span12 intro-card">
-        <h2>📚 Apa itu Aritmatika & Struktur Kontrol?</h2>
-        <!-- Konsep Aritmatika -->
-        <div class="material-section" style="margin-top: 24px;">
-          <h3 style="color: var(--purple-casual); display: flex; align-items: center; gap: 8px; font-size: 22px;">
-            🧮 <span>Operasi Aritmatika dalam Pemrograman</span>
+        <h2>📚 Belajar Pemrograman Dasar dengan Python</h2>
+        
+               <!-- Konsep 1: Aritmatika -->
+        <div class="material-section">
+          <h3 style="color: var(--purple-casual); display: flex; align-items: center; gap: 8px; font-size: 22px; margin-bottom: 16px;">
+            🧮 <span>1. Operasi Matematika (Aritmatika)</span>
           </h3>
           
-          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05)); border-left: 4px solid var(--purple-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(168, 85, 247, 0.3);">
-            <h4 style="margin: 0 0 16px 0; color: var(--text); font-size: 18px;">🤔 Apa itu Operasi Aritmatika?</h4>
-            <p style="color: var(--muted); margin: 0 0 20px 0; font-size: 15px; line-height: 1.6;">
-              Operasi aritmatika adalah operasi matematika dasar yang digunakan dalam pemrograman untuk melakukan perhitungan. 
-              Setiap bahasa pemrograman memiliki operator untuk operasi ini.
+          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05)); border-left: 4px solid var(--purple-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            <h4 style="margin: 0 0 12px 0; color: var(--text); font-size: 18px;">🤔 Kenapa penting?</h4>
+            <p style="color: var(--muted); margin: 0 0 16px 0; font-size: 15px; line-height: 1.6;">
+              Sama seperti kalkulator, komputer bisa melakukan perhitungan matematika. Ini berguna untuk:
             </p>
+            <ul style="color: var(--muted); font-size: 15px; margin: 0 0 20px 0; padding-left: 20px;">
+              <li>Menghitung nilai rapor otomatis</li>
+              <li>Aplikasi kasir di toko</li>
+              <li>Game yang perlu hitung skor</li>
+              <li>Aplikasi split bill di restoran</li>
+            </ul>
             
-            <div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-              <div class="operator-item" style="padding: 16px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05)); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.4); transition: all 0.3s ease; cursor: pointer;">
-                <strong style="color: var(--green-casual); font-size: 16px;">✨ Penjumlahan (+)</strong>
-                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Menambahkan dua nilai</p>
-                <code style="font-size: 14px; color: var(--accent-1); background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 8px; display: inline-block;">5 + 3 = 8</code>
+            <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+              <div style="padding: 16px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05)); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.4);">
+                <strong style="color: var(--green-casual); font-size: 16px;">➕ Tambah (+)</strong>
+                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Menjumlahkan angka</p>
+                <code style="font-size: 14px; color: var(--text); background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; display: block;">5 + 3 = 8</code>
               </div>
-              <div class="operator-item" style="padding: 16px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.4); transition: all 0.3s ease; cursor: pointer;">
-                <strong style="color: var(--blue-casual); font-size: 16px;">➖ Pengurangan (-)</strong>
-                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Mengurangi satu nilai dengan nilai lain</p>
-                <code style="font-size: 14px; color: var(--accent-1); background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 8px; display: inline-block;">10 - 4 = 6</code>
+              <div style="padding: 16px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.4);">
+                <strong style="color: var(--blue-casual); font-size: 16px;">➖ Kurang (-)</strong>
+                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Mengurangi angka</p>
+                <code style="font-size: 14px; color: var(--text); background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; display: block;">10 - 4 = 6</code>
               </div>
-              <div class="operator-item" style="padding: 16px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05)); border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.4); transition: all 0.3s ease; cursor: pointer;">
-                <strong style="color: var(--accent); font-size: 16px;">✖️ Perkalian (*)</strong>
-                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Mengalikan dua nilai</p>
-                <code style="font-size: 14px; color: var(--accent-1); background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 8px; display: inline-block;">7 × 6 = 42</code>
+              <div style="padding: 16px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05)); border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.4);">
+                <strong style="color: var(--accent); font-size: 16px;">✖️ Kali (*)</strong>
+                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Mengalikan angka</p>
+                <code style="font-size: 14px; color: var(--text); background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; display: block;">7 * 6 = 42</code>
               </div>
-              <div class="operator-item" style="padding: 16px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05)); border-radius: 12px; border: 1px solid rgba(249, 115, 22, 0.4); transition: all 0.3s ease; cursor: pointer;">
-                <strong style="color: var(--orange-casual); font-size: 16px;">➗ Pembagian (/)</strong>
-                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Membagi satu nilai dengan nilai lain</p>
-                <code style="font-size: 14px; color: var(--accent-1); background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 8px; display: inline-block;">15 ÷ 3 = 5</code>
+              <div style="padding: 16px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05)); border-radius: 12px; border: 1px solid rgba(249, 115, 22, 0.4);">
+                <strong style="color: var(--orange-casual); font-size: 16px;">➗ Bagi (/)</strong>
+                <p style="margin: 8px 0 4px 0; font-size: 13px; color: var(--muted);">Membagi angka</p>
+                <code style="font-size: 14px; color: var(--text); background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; display: block;">15 / 3 = 5</code>
               </div>
             </div>
           </div>
@@ -810,101 +816,154 @@
 
         <div class="hr"></div>
 
-        <!-- Konsep Struktur Kontrol -->
-        <div class="material-section" style="margin-top: 24px;">
-          <h3 style="color: var(--green-casual); display: flex; align-items: center; gap: 8px; font-size: 22px;">
-            🧩 <span>Struktur Kontrol dalam Pemrograman</span>
+        <!-- Konsep 2: Percabangan -->
+        <div class="material-section">
+          <h3 style="color: var(--green-casual); display: flex; align-items: center; gap: 8px; font-size: 22px; margin-bottom: 16px;">
+            🔀 <span>2. Pengambilan Keputusan (If-Else)</span>
           </h3>
           
-          <!-- Percabangan -->
-          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05)); border-left: 4px solid var(--green-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.3);">
-            <h4 style="margin: 0 0 16px 0; color: var(--text); font-size: 18px;">🔀 Percabangan (Conditional Statements)</h4>
-            <p style="color: var(--muted); margin: 0 0 20px 0; font-size: 15px; line-height: 1.6;">
-              Percabangan memungkinkan program untuk membuat keputusan berdasarkan kondisi tertentu. 
-              Program akan menjalankan blok kode yang berbeda tergantung pada kondisi yang dipenuhi.
+          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-left: 4px solid var(--green-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            <h4 style="margin: 0 0 12px 0; color: var(--text); font-size: 18px;">🤔 Apa itu percabangan?</h4>
+            <p style="color: var(--muted); margin: 0 0 16px 0; font-size: 15px; line-height: 1.6;">
+              Program bisa membuat keputusan seperti manusia! Misalnya: <strong>"Jika nilai >= 75, maka lulus. Jika tidak, maka tidak lulus."</strong>
             </p>
             
-            <div class="code-example" style="background: linear-gradient(135deg, rgba(48, 65, 104, 0.9), rgba(32, 42, 59, 0.8)); padding: 20px; border-radius: 12px; margin: 16px 0; border: 1px solid var(--border-subtle);">
-              <pre style="margin: 0; color: var(--text); font-size: 14px; line-height: 1.5;"><code><span style="color: var(--purple-casual);">if</span> (<span style="color: var(--accent);">nilai</span> >= <span style="color: var(--orange-casual);">90</span>) {
-    <span style="color: var(--accent);">grade</span> = <span style="color: var(--green-casual);">"A - Sangat Baik"</span>;
-} <span style="color: var(--purple-casual);">else if</span> (<span style="color: var(--accent);">nilai</span> >= <span style="color: var(--orange-casual);">75</span>) {
-    <span style="color: var(--accent);">grade</span> = <span style="color: var(--blue-casual);">"B - Baik"</span>;
-} <span style="color: var(--purple-casual);">else if</span> (<span style="color: var(--accent);">nilai</span> >= <span style="color: var(--orange-casual);">60</span>) {
-    <span style="color: var(--accent);">grade</span> = <span style="color: var(--warn);">"C - Cukup"</span>;
-} <span style="color: var(--purple-casual);">else</span> {
-    <span style="color: var(--accent);">grade</span> = <span style="color: var(--danger);">"D - Kurang"</span>;
-}</code></pre>
+            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin: 16px 0;">
+              <h5 style="margin: 0 0 12px 0; color: var(--accent);">🎯 Contoh dalam kehidupan sehari-hari:</h5>
+              <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div style="padding: 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--green-casual);">📱 Aplikasi Absen</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">Jika waktu < 07:00 → "Tepat waktu", jika tidak → "Terlambat"</p>
+                </div>
+                <div style="padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--blue-casual);">🎮 Game</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">Jika HP < 0 → "Game Over", jika tidak → "Lanjut bermain"</p>
+                </div>
+                <div style="padding: 12px; background: rgba(249, 115, 22, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--orange-casual);">💰 E-wallet</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">Jika saldo >= harga → "Bayar", jika tidak → "Saldo kurang"</p>
+                </div>
+              </div>
             </div>
             
-            <p style="color: var(--muted); font-size: 14px; margin: 12px 0 0 0; padding: 12px; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border-left: 3px solid var(--accent);">
-              <strong style="color: var(--accent);">💡 Contoh Penggunaan:</strong> Sistem grading, validasi input, pengambilan keputusan otomatis.
-            </p>
-          </div>
+            <div style="background: linear-gradient(135deg, rgba(48, 65, 104, 0.7), rgba(32, 42, 59, 0.6)); padding: 16px; border-radius: 12px; margin: 16px 0; border: 1px solid var(--border-subtle);">
+              <h5 style="margin: 0 0 8px 0; color: var(--text);">� Contoh kode Python sederhana:</h5>
+              <pre style="margin: 0; color: var(--text); font-size: 14px; line-height: 1.4;"><code>nilai = 85
 
-          <!-- Perulangan -->
-          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); border-left: 4px solid var(--blue-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.3);">
-            <h4 style="margin: 0 0 16px 0; color: var(--text); font-size: 18px;">🔁 Perulangan (Loops)</h4>
-            <p style="color: var(--muted); margin: 0 0 20px 0; font-size: 15px; line-height: 1.6;">
-              Perulangan memungkinkan program untuk menjalankan blok kode berulang kali sampai kondisi tertentu terpenuhi.
+if nilai >= 90:
+    print("Grade A - Excellent!")
+elif nilai >= 75:
+    print("Grade B - Good!")
+elif nilai >= 60:
+    print("Grade C - OK")
+else:
+    print("Grade D - Perlu belajar lagi")</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Konsep 3: Perulangan -->
+        <div class="material-section">
+          <h3 style="color: var(--blue-casual); display: flex; align-items: center; gap: 8px; font-size: 22px; margin-bottom: 16px;">
+            🔁 <span>3. Pengulangan (Loop)</span>
+          </h3>
+          
+          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)); border-left: 4px solid var(--blue-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <h4 style="margin: 0 0 12px 0; color: var(--text); font-size: 18px;">🤔 Kenapa perlu pengulangan?</h4>
+            <p style="color: var(--muted); margin: 0 0 16px 0; font-size: 15px; line-height: 1.6;">
+              Daripada menulis kode yang sama berulang-ulang, kita bisa pakai loop! Seperti meminta komputer untuk <strong>"Ulangi 10 kali"</strong> atau <strong>"Ulangi sampai kondisi terpenuhi"</strong>.
             </p>
             
-            <div style="display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
               <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); padding: 16px; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.3);">
-                <h5 style="margin: 0 0 12px 0; color: var(--warn); font-size: 16px;">🔢 For Loop</h5>
-                <div class="code-example" style="background: linear-gradient(135deg, rgba(47, 65, 107, 0.9), rgba(30, 41, 59, 0.8)); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                  <pre style="margin: 0; color: var(--text); font-size: 13px; line-height: 1.4;"><code><span style="color: var(--purple-casual);">for</span> (<span style="color: var(--purple-casual);">let</span> <span style="color: var(--accent);">i</span> = <span style="color: var(--orange-casual);">1</span>; <span style="color: var(--accent);">i</span> <= <span style="color: var(--orange-casual);">10</span>; <span style="color: var(--accent);">i</span>++) {
-    <span style="color: var(--muted);">console</span>.<span style="color: var(--green-casual);">log</span>(<span style="color: var(--accent);">base</span> + <span style="color: var(--blue-casual);">" x "</span> + <span style="color: var(--accent);">i</span> + <span style="color: var(--blue-casual);">" = "</span> + (<span style="color: var(--accent);">base</span> * <span style="color: var(--accent);">i</span>));
-}</code></pre>
+                <h5 style="margin: 0 0 8px 0; color: var(--warn); font-size: 16px;">🔢 For Loop</h5>
+                <p style="margin: 0 0 12px 0; font-size: 14px; color: var(--muted);">Digunakan ketika kamu tahu <strong>berapa kali</strong> mau mengulang</p>
+                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                  <pre style="margin: 0; color: var(--text); font-size: 12px;"><code># Cetak tabel perkalian 5
+for i in range(1, 11):
+    print(f"5 x {i} = {5*i}")</code></pre>
                 </div>
-                <p style="color: var(--muted); font-size: 12px; margin: 12px 0 0 0; padding: 8px; background: rgba(245, 158, 11, 0.1); border-radius: 6px;">
-                  ✨ Digunakan ketika jumlah iterasi sudah diketahui.
+                <p style="margin: 8px 0 0 0; font-size: 12px; color: var(--muted);">
+                  💡 <strong>Contoh:</strong> Cetak 1-100, tabel perkalian, daftar siswa
                 </p>
               </div>
               
               <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05)); padding: 16px; border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.3);">
-                <h5 style="margin: 0 0 12px 0; color: var(--accent); font-size: 16px;">⏳ While Loop</h5>
-                <div class="code-example" style="background: linear-gradient(135deg, rgba(44, 63, 108, 0.9), rgba(30, 41, 59, 0.8)); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                  <pre style="margin: 0; color: var(--text); font-size: 13px; line-height: 1.4;"><code><span style="color: var(--purple-casual);">while</span> (<span style="color: var(--accent);">input</span> <= <span style="color: var(--orange-casual);">0</span>) {
-    <span style="color: var(--accent);">input</span> = <span style="color: var(--green-casual);">prompt</span>(<span style="color: var(--blue-casual);">"Masukkan angka positif:"</span>);
-    <span style="color: var(--accent);">attempts</span>++;
-}</code></pre>
+                <h5 style="margin: 0 0 8px 0; color: var(--accent); font-size: 16px;">⏳ While Loop</h5>
+                <p style="margin: 0 0 12px 0; font-size: 14px; color: var(--muted);">Digunakan ketika kamu <strong>tidak tahu</strong> berapa kali mengulang</p>
+                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                  <pre style="margin: 0; color: var(--text); font-size: 12px;"><code># Terus minta input sampai benar
+password = ""
+while password != "12345":
+    password = input("Masukkan password: ")</code></pre>
                 </div>
-                <p style="color: var(--muted); font-size: 12px; margin: 12px 0 0 0; padding: 8px; background: rgba(6, 182, 212, 0.1); border-radius: 6px;">
-                  🔄 Digunakan ketika kondisi belum pasti kapan berhenti.
+                <p style="margin: 8px 0 0 0; font-size: 12px; color: var(--muted);">
+                  � <strong>Contoh:</strong> Login, game, countdown timer
                 </p>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Error Handling -->
-          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05)); border-left: 4px solid var(--orange-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(249, 115, 22, 0.3);">
-            <h4 style="margin: 0 0 16px 0; color: var(--text); font-size: 18px;">🛡️ Penanganan Kesalahan (Error Handling)</h4>
-            <p style="color: var(--muted); margin: 0 0 20px 0; font-size: 15px; line-height: 1.6;">
-              Error handling memungkinkan program untuk menangani kesalahan dengan graceful tanpa crash.
+        <div class="hr"></div>
+
+        <!-- Konsep 4: Error Handling -->
+        <div class="material-section">
+          <h3 style="color: var(--orange-casual); display: flex; align-items: center; gap: 8px; font-size: 22px; margin-bottom: 16px;">
+            🛡️ <span>4. Menangani Kesalahan (Error Handling)</span>
+          </h3>
+          
+          <div class="concept-card" style="padding: 24px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.05)); border-left: 4px solid var(--orange-casual); margin: 16px 0; border-radius: 16px; border: 1px solid rgba(249, 115, 22, 0.3);">
+            <h4 style="margin: 0 0 12px 0; color: var(--text); font-size: 18px;">🤔 Kenapa penting?</h4>
+            <p style="color: var(--muted); margin: 0 0 16px 0; font-size: 15px; line-height: 1.6;">
+              Program yang baik harus siap menghadapi kesalahan! Misalnya user memasukkan huruf padahal diminta angka, atau membagi dengan nol.
+              Daripada program crash, kita beri pesan yang jelas.
             </p>
             
-            <div class="code-example" style="background: linear-gradient(135deg, rgba(50, 70, 117, 0.9), rgba(30, 41, 59, 0.8)); padding: 20px; border-radius: 12px; margin: 16px 0; border: 1px solid var(--border-subtle);">
-              <pre style="margin: 0; color: var(--text); font-size: 14px; line-height: 1.5;"><code><span style="color: var(--purple-casual);">try</span> {
-    <span style="color: var(--purple-casual);">let</span> <span style="color: var(--accent);">result</span> = <span style="color: var(--accent);">a</span> / <span style="color: var(--accent);">b</span>;
-    <span style="color: var(--purple-casual);">if</span> (<span style="color: var(--accent);">b</span> === <span style="color: var(--orange-casual);">0</span>) <span style="color: var(--purple-casual);">throw new</span> <span style="color: var(--green-casual);">Error</span>(<span style="color: var(--blue-casual);">"Tidak bisa membagi dengan nol"</span>);
-    <span style="color: var(--muted);">console</span>.<span style="color: var(--green-casual);">log</span>(<span style="color: var(--blue-casual);">"Hasil:"</span>, <span style="color: var(--accent);">result</span>);
-} <span style="color: var(--purple-casual);">catch</span> (<span style="color: var(--accent);">error</span>) {
-    <span style="color: var(--muted);">console</span>.<span style="color: var(--danger);">error</span>(<span style="color: var(--blue-casual);">"Terjadi kesalahan:"</span>, <span style="color: var(--accent);">error</span>.<span style="color: var(--green-casual);">message</span>);
-} <span style="color: var(--purple-casual);">finally</span> {
-    <span style="color: var(--muted);">console</span>.<span style="color: var(--green-casual);">log</span>(<span style="color: var(--blue-casual);">"Operasi selesai, bersihkan resource"</span>);
-}</code></pre>
+            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin: 16px 0;">
+              <h5 style="margin: 0 0 12px 0; color: var(--accent);">🎯 Contoh kesalahan yang sering terjadi:</h5>
+              <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div style="padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--danger);">🔢 Input Salah</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">User ketik "abc" padahal diminta angka</p>
+                </div>
+                <div style="padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--danger);">➗ Bagi Nol</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">Mencoba bagi dengan 0 (matematika tidak boleh)</p>
+                </div>
+                <div style="padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                  <strong style="color: var(--danger);">📂 File Tidak Ada</strong>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--muted);">Buka file yang tidak tersedia</p>
+                </div>
+              </div>
             </div>
             
-            <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 16px;">
-              <div style="padding: 12px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05)); border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
+            <div style="background: linear-gradient(135deg, rgba(48, 65, 104, 0.7), rgba(32, 42, 59, 0.6)); padding: 16px; border-radius: 12px; margin: 16px 0; border: 1px solid var(--border-subtle);">
+              <h5 style="margin: 0 0 8px 0; color: var(--text);">📝 Contoh kode Python untuk tangani error:</h5>
+              <pre style="margin: 0; color: var(--text); font-size: 14px; line-height: 1.4;"><code>try:
+    angka = int(input("Masukkan angka: "))
+    hasil = 10 / angka
+    print(f"Hasil: {hasil}")
+except ValueError:
+    print("Error: Tolong masukkan angka yang valid!")
+except ZeroDivisionError:
+    print("Error: Tidak bisa bagi dengan nol!")
+finally:
+    print("Program selesai.")</code></pre>
+            </div>
+            
+            <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-top: 16px;">
+              <div style="padding: 12px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05)); border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.3); text-align: center;">
                 <strong style="color: var(--green-casual); font-size: 14px;">🎯 TRY</strong>
-                <p style="margin: 4px 0 0 0; font-size: 11px; color: var(--muted);">Blok kode yang mungkin error</p>
+                <p style="margin: 4px 0 0 0; font-size: 11px; color: var(--muted);">Coba jalankan kode</p>
               </div>
-              <div style="padding: 12px; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05)); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
-                <strong style="color: var(--danger); font-size: 14px;">⚠️ CATCH</strong>
-                <p style="margin: 4px 0 0 0; font-size: 11px; color: var(--muted);">Menangani error yang terjadi</p>
+              <div style="padding: 12px; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05)); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); text-align: center;">
+                <strong style="color: var(--danger); font-size: 14px;">⚠️ EXCEPT</strong>
+                <p style="margin: 4px 0 0 0; font-size: 11px; color: var(--muted);">Tangkap error</p>
               </div>
-              <div style="padding: 12px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3);">
+              <div style="padding: 12px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3); text-align: center;">
                 <strong style="color: var(--warn); font-size: 14px;">🔄 FINALLY</strong>
                 <p style="margin: 4px 0 0 0; font-size: 11px; color: var(--muted);">Selalu dijalankan</p>
               </div>
@@ -914,6 +973,7 @@
 
         <div class="hr"></div>
 
+        <!-- Penutup -->
         <!-- Call to Action untuk Praktik -->
         <div class="cta-section" style="text-align: center; margin-top: 24px;">
           <h3 style="margin: 0 0 16px 0;">🧩 Saatnya Praktik! 🧮</h3>
@@ -1101,7 +1161,7 @@
 
     <footer>
         &copy; 2025 <strong>Hello World</strong>. All rights reserved.  
-        Dibuat untuk demo edukasi.  
+        Aplikasi Dibuat untuk Demo Edukasi Pemrograman.  
     </footer>
   </div>
 
@@ -2046,4 +2106,3 @@ else:
   </script>
 </body>
 </html>
-
