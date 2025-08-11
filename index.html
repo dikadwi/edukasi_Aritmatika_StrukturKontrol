@@ -354,6 +354,7 @@
       transition: all var(--duration-normal) var(--ease);
       position: relative;
       color: #1e293b;
+      white-space: pre-wrap; /* atau pre */
     }
 
     .eq.success {
@@ -755,7 +756,7 @@
       <div class="logo" aria-hidden="true"></div>
       <div class="title">
         <h1>Kalkulator & Struktur Kontrol</h1>
-        <p>Operasi Aritmatika + Percabangan • Perulangan • Try/Catch</p>
+        <p>Operasi Aritmatika + Percabangan • Perulangan • Try/Catch — siap untuk GitHub Pages</p>
       </div>
     </header>
 
@@ -1065,7 +1066,7 @@
       </div>
 
       <div class="card span12 error-handling-card">
-        <h2>🛡️ Penanganan Kesalahan (try / catch / finally)</h2>
+        <h2>🛡️ Penanganan Kesalahan (try / except / finally)</h2>
         <p class="muted">Simulasi pembagian yang aman dari error input & pembagian nol dengan logging.</p>
         <div class="row">
           <div class="field">
@@ -1259,26 +1260,34 @@
           this.displayResult('🔄 Memproses perhitungan...', 'warning');
           await Utils.delay(300);
           
-          const codeBlock = `// Kode JavaScript untuk operasi aritmatika:
-function calculate(a, b, operator) {
-    let result;
-    switch(operator) {
-        case '+': result = a + b; break;
-        case '-': result = a - b; break;
-        case '*': result = a * b; break;
-        case '/': 
-            if (b === 0) throw new Error("Division by zero");
-            result = a / b; 
-            break;
-    }
-    return result;
-}
+          const codeBlock = `# Kode Python untuk operasi aritmatika:
+def calculate(a, b, operator):
+    """Fungsi untuk melakukan operasi aritmatika dasar"""
+    if operator == '+':
+        result = a + b
+    elif operator == '-':
+        result = a - b
+    elif operator == '*':
+        result = a * b
+    elif operator == '/':
+        if b == 0:
+            raise ValueError("Tidak bisa membagi dengan nol")
+        result = a / b
+    else:
+        raise ValueError("Operator tidak valid")
+    
+    return result
 
-// Eksekusi:
-const a = ${Utils.formatSmart(a)};
-const b = ${Utils.formatSmart(b)};
-const operator = '${operator}';
-const result = calculate(a, b, operator);`;
+# Eksekusi program:
+a = ${Utils.formatSmart(a)}
+b = ${Utils.formatSmart(b)}
+operator = '${operator}'
+
+try:
+    result = calculate(a, b, operator)
+    print(f"{a} {operator} {b} = {result}")
+except ValueError as e:
+    print(f"Error: {e}")`;
           
           this.displayResult(`📝 KODE PROGRAM:\n${codeBlock}`, 'warning');
           await Utils.delay(800);
@@ -1441,33 +1450,34 @@ const result = calculate(a, b, operator);`;
           this.elements.predikatOut.className = 'eq warning';
           await Utils.delay(300);
           
-          const codeBlock = `// Kode JavaScript untuk struktur if-else:
-function evaluateGrade(score) {
-    let grade, description;
+          const codeBlock = `# Kode Python untuk struktur if-elif-else:
+def evaluate_grade(score):
+    """Fungsi untuk mengevaluasi nilai menjadi predikat"""
+    if score >= 90:
+        grade = "A"
+        description = "Sangat Baik"
+    elif score >= 75:
+        grade = "B" 
+        description = "Baik"
+    elif score >= 60:
+        grade = "C"
+        description = "Cukup"
+    else:
+        grade = "D"
+        description = "Kurang"
     
-    if (score >= 90) {
-        grade = "A";
-        description = "Sangat Baik";
-    } else if (score >= 75) {
-        grade = "B"; 
-        description = "Baik";
-    } else if (score >= 60) {
-        grade = "C";
-        description = "Cukup";
-    } else {
-        grade = "D";
-        description = "Kurang";
-    }
-    
-    return { grade, description };
-}
+    return grade, description
 
-// Eksekusi:
-const score = ${Utils.formatSmart(score)};
-const result = evaluateGrade(score);`;
+# Eksekusi program:
+score = ${Utils.formatSmart(score)}
+
+# Evaluasi nilai
+grade, description = evaluate_grade(score)
+print(f"Nilai: {score}")
+print(f"Predikat: {grade} ({description})")`;
           
-          this.elements.predikatOut.textContent = `📝 KODE IF-ELSE:\n${codeBlock}`;
-          this.elements.predikatOut.className = 'eq warning';
+          this.elements.predikatOut.textContent = `📝 KODE IF-ELIF-ELSE:\n${codeBlock}`;
+          this.elements.predikatOut.className = 'eq primary';
           await Utils.delay(800);
           
           let grade, gradeClass, description, process;
@@ -1553,21 +1563,29 @@ const result = evaluateGrade(score);`;
           const output = [`🔢 Tabel Perkalian ${Utils.formatSmart(base)}:`, ''];
           
           // Tampilkan kode terlebih dahulu
-          const codeBlock = `// Kode JavaScript untuk FOR LOOP:
-function generateMultiplicationTable(base) {
-    const results = [];
+          const codeBlock = `# Kode Python untuk FOR LOOP:
+def generate_multiplication_table(base):
+    """Fungsi untuk membuat tabel perkalian menggunakan for loop"""
+    results = []
     
-    for (let i = 1; i <= 10; i++) {
-        const result = base * i;
-        results.push(\`\${base} × \${i} = \${result}\`);
-    }
+    for i in range(1, 11):  # range(1, 11) = 1 sampai 10
+        result = base * i
+        results.append(f"{base} × {i} = {result}")
     
-    return results;
-}
+    return results
 
-// Eksekusi:
-const base = ${Utils.formatSmart(base)};
-const table = generateMultiplicationTable(base);`;
+# Eksekusi program:
+base = ${Utils.formatSmart(base)}
+
+print(f"Tabel Perkalian {base}:")
+print("-" * 20)
+
+# Menggunakan for loop untuk menampilkan tabel
+for i in range(1, 11):
+    result = base * i
+    print(f"{base} × {i:2d} = {result:6}")
+
+print("\\nSelesai!")`;
           
           this.elements.loopOut.textContent = `📝 KODE FOR LOOP:\n${codeBlock}`;
           this.elements.loopOut.className = 'eq console warning';
@@ -1598,30 +1616,40 @@ const table = generateMultiplicationTable(base);`;
           this.elements.loopOut.className = 'eq console warning';
           await Utils.delay(400);
           
-          const codeBlock = `// Kode JavaScript untuk WHILE LOOP:
-function validatePositive(number) {
-    let attempts = 1;
-    let currentNumber = number;
-    const log = [];
+          const codeBlock = `# Kode Python untuk WHILE LOOP:
+def validate_positive(number):
+    """Fungsi untuk validasi angka positif menggunakan while loop"""
+    import random
     
-    while (currentNumber <= 0 && attempts <= 3) {
-        log.push(\`❌ Percobaan \${attempts}: \${currentNumber} ≤ 0 (tidak valid)\`);
-        currentNumber = Math.abs(currentNumber) + Math.random() * 10;
-        attempts++;
-    }
+    attempts = 1
+    current_number = number
+    log = []
     
-    if (currentNumber > 0) {
-        log.push(\`✅ Valid: \${currentNumber} > 0\`);
-        return { success: true, result: currentNumber, log };
-    } else {
-        log.push('❌ Batas maksimal percobaan tercapai');
-        return { success: false, result: currentNumber, log };
-    }
-}
+    while current_number <= 0 and attempts <= 3:
+        log.append(f"❌ Percobaan {attempts}: {current_number} ≤ 0 (tidak valid)")
+        current_number = abs(current_number) + random.uniform(1, 10)
+        attempts += 1
+    
+    if current_number > 0:
+        log.append(f"✅ Valid: {current_number} > 0")
+        return {"success": True, "result": current_number, "log": log}
+    else:
+        log.append("❌ Batas maksimal percobaan tercapai")
+        return {"success": False, "result": current_number, "log": log}
 
-// Eksekusi:
-const number = ${Utils.formatSmart(number)};
-const validation = validatePositive(number);`;
+# Eksekusi program:
+number = ${Utils.formatSmart(number)}
+
+print("Memulai validasi angka positif...")
+result = validate_positive(number)
+
+for message in result["log"]:
+    print(message)
+
+if result["success"]:
+    print(f"\\nHasil: {result['result']:.2f} adalah angka positif yang valid!")
+else:
+    print("\\nValidasi gagal!")`;
           
           this.elements.loopOut.textContent = `📝 KODE WHILE LOOP:\n${codeBlock}`;
           this.elements.loopOut.className = 'eq console warning';
@@ -1670,27 +1698,39 @@ const validation = validatePositive(number);`;
           if (count <= 0) throw new Error("Countdown harus > 0");
           
           // Tampilkan kode while loop untuk countdown
-          const codeBlock = `// Kode JavaScript untuk COUNTDOWN WHILE LOOP:
-function startCountdown(initialCount) {
-    let count = initialCount;
-    const log = [];
+          const codeBlock = `# Kode Python untuk COUNTDOWN WHILE LOOP:
+def start_countdown(initial_count):
+    """Fungsi countdown menggunakan while loop"""
+    import time
     
-    while (count >= 0) {
-        log.push(\`⏳ Countdown: \${count}\`);
-        count--;
+    count = initial_count
+    log = []
+    
+    print(f"Memulai countdown dari {initial_count}...")
+    
+    while count >= 0:
+        print(f"⏳ {count}")
+        log.append(f"⏳ Countdown: {count}")
         
-        if (count < 0) {
-            log.push('🎉 Countdown selesai!');
-            break;
-        }
-    }
+        if count == 0:
+            print("🎉 Countdown selesai!")
+            log.append("🎉 Countdown selesai!")
+            break
+            
+        count -= 1
+        time.sleep(1)  # Delay 1 detik
     
-    return log;
-}
+    return log
 
-// Eksekusi:
-const initialCount = ${count};
-const countdownLog = startCountdown(initialCount);`;
+# Eksekusi program:
+initial_count = ${count}
+
+# Menjalankan countdown
+countdown_log = start_countdown(initial_count)
+
+print("\\nLog lengkap:")
+for entry in countdown_log:
+    print(entry)`;
           
           this.elements.loopOut.textContent = `� KODE COUNTDOWN WHILE LOOP:\n${codeBlock}\n\n🔄 Memulai countdown...`;
           this.elements.loopOut.className = 'eq console warning';
@@ -1754,39 +1794,66 @@ const countdownLog = startCountdown(initialCount);`;
           b = errorType === 'divide-zero' ? 0 : Utils.parseNumber(this.elements.divB.value);
         }
         
-        const codeBlock = `// Kode JavaScript untuk TRY-CATCH-FINALLY:
-function safeDivision(a, b, errorType) {
-    const log = [];
+        const codeBlock = `# Kode Python untuk TRY-EXCEPT-FINALLY:
+def safe_division(a, b, error_type):
+    """Fungsi pembagian aman dengan error handling"""
+    log = []
     
-    try {
-        log.push('🔍 TRY: Starting safe division...');
+    try:
+        log.append('🔍 TRY: Memulai operasi pembagian aman...')
         
-        if (errorType === 'network-error') {
-            throw new Error('Network connection failed');
-        }
+        # Simulasi berbagai jenis error
+        if error_type == 'network-error':
+            raise ConnectionError('Network connection failed')
         
-        if (typeof a !== 'number') throw new Error('Input A tidak valid');
-        if (typeof b !== 'number') throw new Error('Input B tidak valid');
-        if (b === 0) throw new Error('Tidak bisa membagi dengan nol');
+        # Validasi input
+        if not isinstance(a, (int, float)):
+            raise TypeError('Input A tidak valid - harus berupa angka')
+        if not isinstance(b, (int, float)):
+            raise TypeError('Input B tidak valid - harus berupa angka')
+        if b == 0:
+            raise ZeroDivisionError('Tidak bisa membagi dengan nol')
         
-        const result = a / b;
-        log.push(\`✅ TRY: Sukses! \${a} ÷ \${b} = \${result}\`);
-        return { success: true, result, log };
+        # Melakukan pembagian
+        result = a / b
+        log.append(f'✅ TRY: Sukses! {a} ÷ {b} = {result}')
+        return {"success": True, "result": result, "log": log}
         
-    } catch (error) {
-        log.push(\`🚨 CATCH: Error tertangkap - \${error.message}\`);
-        return { success: false, error: error.message, log };
+    except ZeroDivisionError as e:
+        log.append(f'🚨 EXCEPT: ZeroDivisionError - {e}')
+        return {"success": False, "error": str(e), "log": log}
         
-    } finally {
-        log.push('🔄 FINALLY: Membersihkan resource...');
-    }
-}
+    except TypeError as e:
+        log.append(f'🚨 EXCEPT: TypeError - {e}')
+        return {"success": False, "error": str(e), "log": log}
+        
+    except ConnectionError as e:
+        log.append(f'🚨 EXCEPT: ConnectionError - {e}')
+        return {"success": False, "error": str(e), "log": log}
+        
+    except Exception as e:
+        log.append(f'🚨 EXCEPT: Unexpected error - {e}')
+        return {"success": False, "error": str(e), "log": log}
+        
+    finally:
+        log.append('🔄 FINALLY: Membersihkan resource dan menutup operasi')
 
-// Eksekusi:
-const a = ${typeof a === 'string' ? `"${a}"` : a};
-const b = ${typeof b === 'string' ? `"${b}"` : b};
-const errorType = "${errorType}";
-const result = safeDivision(a, b, errorType);`;
+# Eksekusi program:
+a = ${typeof a === 'string' ? `"${a}"` : a}
+b = ${typeof b === 'string' ? `"${b}"` : b}
+error_type = "${errorType}"
+
+print("Memulai operasi pembagian aman...")
+result = safe_division(a, b, error_type)
+
+print("\\nLog operasi:")
+for entry in result["log"]:
+    print(entry)
+
+if result["success"]:
+    print(f"\\nHasil: {result['result']}")
+else:
+    print(f"\\nError: {result['error']}")`;
         
         this.elements.divOut.textContent = `� KODE TRY-CATCH-FINALLY:\n${codeBlock}`;
         this.elements.divOut.className = 'eq warning';
@@ -1808,7 +1875,7 @@ const result = safeDivision(a, b, errorType);`;
           
           const result = a / b;
           
-          const successOutput = `📝 KODE TRY-CATCH-FINALLY:\n${codeBlock}\n\n✅ HASIL EKSEKUSI:\n🔍 TRY: Starting safe division...\n📊 TRY: Input validation passed\n⚙️ TRY: Melakukan pembagian ${a} ÷ ${b}\n✅ TRY: Sukses! ${Utils.formatSmart(a)} ÷ ${Utils.formatSmart(b)} = ${Utils.formatSmart(result)}\n🔄 FINALLY: Membersihkan resource...`;
+          const successOutput = `📝 KODE TRY-EXCEPT-FINALLY:\n${codeBlock}\n\n✅ HASIL EKSEKUSI:\n🔍 TRY: Starting safe division...\n📊 TRY: Input validation passed\n⚙️ TRY: Melakukan pembagian ${a} ÷ ${b}\n✅ TRY: Sukses! ${Utils.formatSmart(a)} ÷ ${Utils.formatSmart(b)} = ${Utils.formatSmart(result)}\n🔄 FINALLY: Membersihkan resource...`;
           
           this.elements.divOut.textContent = successOutput;
           this.elements.divOut.className = 'eq success';
@@ -1816,7 +1883,7 @@ const result = safeDivision(a, b, errorType);`;
           this.addToErrorLog(`${logEntry}✅ TRY: Division successful: ${Utils.formatSmart(result)}`);
           
         } catch (error) {
-          const errorOutput = `📝 KODE TRY-CATCH-FINALLY:\n${codeBlock}\n\n❌ HASIL EKSEKUSI:\n🔍 TRY: Starting safe division...\n📊 TRY: Input validation: a=${a}, b=${b}\n🚨 CATCH: Error tertangkap - ${error.message}\n🔄 FINALLY: Membersihkan resource...`;
+          const errorOutput = `📝 KODE TRY-EXCEPT-FINALLY:\n${codeBlock}\n\n❌ HASIL EKSEKUSI:\n🔍 TRY: Starting safe division...\n📊 TRY: Input validation: a=${a}, b=${b}\n🚨 EXCEPT: Error tertangkap - ${error.message}\n🔄 FINALLY: Membersihkan resource...`;
           
           this.elements.divOut.textContent = errorOutput;
           this.elements.divOut.className = 'eq error';
@@ -1979,4 +2046,3 @@ const result = safeDivision(a, b, errorType);`;
   </script>
 </body>
 </html>
-
