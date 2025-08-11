@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kalkulator & Struktur Kontrol</title>
+  <meta name="description" content="Aritmatika & Struktur Kontrol (if/elif/else, for, while, try/except)."/>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #0f172a;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --accent: #7c3aed;
+      --accent-2: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+      --ring: rgba(124, 58, 237, 0.45);
+      --glow: rgba(124, 58, 237, 0.3);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.12);
+      
+      /* Animation variables */
+      --duration-fast: 150ms;
+      --duration-normal: 250ms;
+      --duration-slow: 400ms;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: 
+        radial-gradient(1200px 600px at 10% -10%, #1e293b 10%, transparent 40%),
+        radial-gradient(1000px 600px at 110% 10%, #1d2235 10%, transparent 40%),
+        var(--bg);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding: clamp(16px, 4vw, 24px);
+    }
+
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+      animation: slideInFromTop var(--duration-slow) var(--ease-out);
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: conic-gradient(from 210deg at 50% 50%, #8b5cf6, #22c55e 40%, #06b6d4 70%, #f472b6 100%);
+      box-shadow: 0 8px 32px var(--glow);
+      border: 1px solid var(--border-subtle);
+      transition: transform var(--duration-normal) var(--ease);
+      cursor: pointer;
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 12px 40px var(--glow);
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: clamp(20px, 5vw, 24px);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      background: linear-gradient(135deg, var(--text), var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .title p {
+      margin: 4px 0 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    nav {
+      margin-top: 24px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      animation: slideInFromBottom var(--duration-slow) var(--ease-out) 0.1s both;
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: all var(--duration-normal) var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease);
+    }
+
+    .tab-btn:hover::before {
+      opacity: 0.5;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.08));
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 0 3px var(--ring) inset, 0 4px 12px rgba(124, 58, 237, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      animation: fadeInUp var(--duration-slow) var(--ease-out) 0.2s both;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .card.span6 {
+        grid-column: span 6;
+      }
+      .card.span12 {
+        grid-column: span 12;
+      }
+    }
+
+    .card {
+      grid-column: span 12;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+      transition: all var(--duration-normal) var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 32px 100px rgba(0, 0, 0, 0.5);
+      border-color: var(--border-strong);
+    }
+
+    .card h2 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: -4px;
+      margin-bottom: 16px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 180px;
+      flex: 1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color var(--duration-fast) var(--ease);
+    }
+
+    input, select, button, textarea {
+      font: inherit;
+      color: var(--text);
+      background: rgba(11, 16, 32, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 16px;
+      border-radius: 12px;
+      outline: none;
+      transition: all var(--duration-normal) var(--ease);
+      position: relative;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 0 3px var(--ring);
+      border-color: rgba(124, 58, 237, 0.6);
+      transform: translateY(-1px);
+    }
+
+    input:focus + label, select:focus + label, textarea:focus + label {
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      border-color: #7c3aed;
+      cursor: pointer;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+    }
+
+    .btn-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #334155, #1e293b);
+      border-color: #475569;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, #475569, #334155);
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: #22c55e;
+      color: #065f46;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-success:hover {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border-color: #ef4444;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      transform: translateY(-1px);
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .eq {
+      font-family: ui-monospace, 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+      background: rgba(11, 16, 32, 0.8);
+      backdrop-filter: blur(8px);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      transition: all var(--duration-normal) var(--ease);
+      position: relative;
+    }
+
+    .eq.success {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    .eq.error {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .eq.warning {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .console {
+      min-height: 120px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .hr {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+      margin: 20px 0;
+      border: none;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .pill {
+      font-size: 12px;
+      color: #065f46;
+      background: linear-gradient(135deg, #86efac, #22c55e);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* Animations */
+    @keyframes slideInFromTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromBottom {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .loading {
+      animation: pulse 2s infinite;
+    }
+
+    /* Enhanced responsive design */
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+      
+      .row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .field {
+        min-width: unset;
+      }
+      
+      nav {
+        flex-direction: column;
+        gap: 4px;
+      }
+      
+      .tab-btn {
+        text-align: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Dark mode enhancements */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --muted: #64748b;
+        --text: #1e293b;
+        --border-subtle: rgba(0, 0, 0, 0.08);
+        --border-strong: rgba(0, 0, 0, 0.12);
+      }
+      
+      body {
+        background: 
+          radial-gradient(1200px 600px at 10% -10%, #e2e8f0 10%, transparent 40%),
+          radial-gradient(1000px 600px at 110% 10%, #cbd5e1 10%, transparent 40%),
+          var(--bg);
+      }
+    }
+
+    /* Grade visualization styles */
+    .grade-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .grade-bar {
+      position: relative;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .grade-label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 2;
+      color: var(--text);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .grade-fill {
+      height: 100%;
+      transition: width var(--duration-slow) var(--ease-out);
+      border-radius: 12px;
+    }
+
+    .grade-bar.active .grade-fill {
+      animation: pulse 2s infinite;
+    }
+
+    /* Enhanced form styles */
+    .calculator-form {
+      position: relative;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading .btn-text::after {
+      content: '...';
+      animation: pulse 1s infinite;
+    }
+
+    /* Enhanced console styles */
+    .console {
+      position: relative;
+    }
+
+    .console::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 
+        16px 0 0 #f59e0b,
+        32px 0 0 #ef4444;
+    }
+
+    /* Countdown timer styles */
+    .countdown-display {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(34, 197, 94, 0.1));
+      border-radius: 12px;
+      margin: 12px 0;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .countdown-display.counting {
+      animation: pulse 1s infinite;
+      border-color: var(--accent);
+    }
+
+    /* Enhanced responsive design for new elements */
+    @media (max-width: 640px) {
+      .grade-bars {
+        font-size: 11px;
+      }
+      
+      .grade-label {
+        font-size: 10px;
+        left: 8px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Kalkulator & Struktur Kontrol</h1>
+        <p>Operasi Aritmatika + Percabangan • Perulangan • Try/Catch — siap untuk GitHub Pages</p>
+      </div>
+    </header>
+
+    <nav role="tablist" aria-label="Fitur">
+      <button class="tab-btn" role="tab" aria-selected="true" data-tab="arit">🧮 Operasi Aritmatika</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="ctrl">🧩 Struktur Kontrol</button>
+    </nav>
+
+    <!-- TAB: Aritmatika -->
+    <section id="tab-arit" class="grid" role="tabpanel" aria-labelledby="Aritmatika">
+      <div class="card span6 calculator-card">
+        <h2>🧮 Kalkulator Aritmatika</h2>
+        <p class="muted">Mendukung Integer & Float. Hindari pembagian dengan nol.</p>
+        <form class="calculator-form" onsubmit="return false;">
+          <div class="row">
+            <div class="field">
+              <label for="numA">Angka A</label>
+              <input id="numA" type="text" placeholder="misal: 5 atau 5.5" inputmode="decimal" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="op">Operasi</label>
+              <select id="op">
+                <option value="+">Penjumlahan (+)</option>
+                <option value="-">Pengurangan (−)</option>
+                <option value="*">Perkalian (×)</option>
+                <option value="/">Pembagian (÷)</option>
+                <option value="**">Pangkat (^)</option>
+                <option value="%">Modulo (%)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="numB">Angka B</label>
+              <input id="numB" type="text" placeholder="misal: 4 atau 0.25" inputmode="decimal" autocomplete="off" />
+            </div>
+          </div>
+          <div class="row" style="margin-top: 16px;">
+            <button id="btnCalc" class="btn-primary" type="button">
+              <span class="btn-text">Hitung</span>
+            </button>
+            <button id="btnClear" class="btn-secondary" type="button">Bersihkan</button>
+            <button id="btnHistory" class="btn-secondary" type="button">Riwayat</button>
+          </div>
+        </form>
+        <div class="stack" style="margin-top: 16px;">
+          <div id="equation" class="eq" aria-live="polite">Hasil akan tampil di sini…</div>
+          <div id="history" class="eq console" style="display: none; max-height: 200px; overflow-y: auto;">
+            <strong>Riwayat Perhitungan:</strong>
+          </div>
+          <small class="muted">
+            Format: <span class="pill">a ⊗ b = hasil</span> 
+            (contoh: <strong>5 × 4 = 20</strong>)
+          </small>
+        </div>
+      </div>
+
+      <div class="card span6 examples-card">
+        <h2>✨ Contoh Otomatis</h2>
+        <p class="muted">Klik untuk mengisi & menghitung cepat.</p>
+        <div class="row">
+          <button class="btn-success" data-demo="5 * 4" title="Perkalian sederhana">5 × 4</button>
+          <button class="btn-success" data-demo="12 / 3" title="Pembagian sederhana">12 ÷ 3</button>
+          <button class="btn-success" data-demo="7 + 2.5" title="Penjumlahan dengan desimal">7 + 2.5</button>
+          <button class="btn-success" data-demo="9 - 13.2" title="Pengurangan dengan hasil negatif">9 − 13.2</button>
+        </div>
+        <div class="row" style="margin-top: 12px;">
+          <button class="btn-success" data-demo="2 ** 3" title="Operasi pangkat">2³</button>
+          <button class="btn-success" data-demo="17 % 5" title="Operasi modulo">17 % 5</button>
+          <button class="btn-success" data-demo="3.14159 * 2" title="Dengan konstanta π">π × 2</button>
+          <button class="btn-success" data-demo="100 / 7" title="Hasil desimal panjang">100 ÷ 7</button>
+        </div>
+        <div class="hr"></div>
+        <div class="stack">
+          <div class="muted">💡 Fitur validasi:</div>
+          <ul class="muted" style="margin-top: -8px; font-size: 13px;">
+            <li>✅ Input harus angka (integer atau desimal)</li>
+            <li>❌ Pembagian dengan nol akan ditolak</li>
+            <li>🔢 Hasil dibulatkan maksimal 10 digit signifikan</li>
+            <li>📊 Riwayat perhitungan tersimpan</li>
+            <li>⌨️ Keyboard shortcuts: Enter untuk hitung, Escape untuk bersihkan</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: Struktur Kontrol -->
+    <section id="tab-ctrl" class="grid" role="tabpanel" hidden>
+      <div class="card span6 control-card">
+        <h2>🧩 Percabangan (if / else if / else)</h2>
+        <p class="muted">Masukkan nilai ujian, lihat predikatnya dengan visualisasi.</p>
+        <div class="row">
+          <div class="field">
+            <label for="nilai">Nilai (0–100)</label>
+            <input id="nilai" type="text" placeholder="misal: 82.5" inputmode="decimal" autocomplete="off" 
+                   min="0" max="100" />
+          </div>
+          <div class="field" style="align-self: end;">
+            <button id="btnPredikat" class="btn-primary">Evaluasi Predikat</button>
+          </div>
+        </div>
+        <div id="predikatOut" class="eq" style="margin-top: 16px;">Predikat: —</div>
+        
+        <!-- Grade visualization -->
+        <div class="grade-scale" style="margin-top: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px;">
+          <div class="muted" style="margin-bottom: 12px;">📊 Skala Penilaian:</div>
+          <div class="grade-bars">
+            <div class="grade-bar" data-grade="A">
+              <span class="grade-label">A (90-100)</span>
+              <div class="grade-fill" style="width: 0%; background: linear-gradient(90deg, #22c55e, #16a34a);"></div>
+            </div>
+            <div class="grade-bar" data-grade="B">
+              <span class="grade-label">B (75-89)</span>
+              <div class="grade-fill" style="width: 0%; background: linear-gradient(90deg, #3b82f6, #2563eb);"></div>
+            </div>
+            <div class="grade-bar" data-grade="C">
+              <span class="grade-label">C (60-74)</span>
+              <div class="grade-fill" style="width: 0%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+            </div>
+            <div class="grade-bar" data-grade="D">
+              <span class="grade-label">D (0-59)</span>
+              <div class="grade-fill" style="width: 0%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card span6 loop-card">
+        <h2>🔁 Perulangan (for, while)</h2>
+        <p class="muted">Buat tabel perkalian (for) & validasi input positif (while).</p>
+        <div class="row">
+          <div class="field">
+            <label for="angkaKali">Angka untuk tabel (for)</label>
+            <input id="angkaKali" type="text" placeholder="misal: 7" inputmode="numeric" autocomplete="off" />
+          </div>
+          <div class="field" style="align-self: end;">
+            <button id="btnTabel" class="btn-primary">Cetak Tabel × (1..10)</button>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="row">
+          <div class="field">
+            <label for="angkaPositif">Masukkan angka positif (while)</label>
+            <input id="angkaPositif" type="text" placeholder="misal: 3" inputmode="decimal" autocomplete="off" />
+          </div>
+          <div class="field" style="align-self: end;">
+            <button id="btnWhile" class="btn-secondary">Validasi Positif</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 12px;">
+          <div class="field">
+            <label for="countdown">Countdown Timer (while)</label>
+            <input id="countdown" type="text" placeholder="misal: 5" inputmode="numeric" autocomplete="off" />
+          </div>
+          <div class="field" style="align-self: end;">
+            <button id="btnCountdown" class="btn-secondary">Start Countdown</button>
+          </div>
+        </div>
+        <div id="loopOut" class="eq console" style="margin-top: 16px;">Output perulangan akan tampil di sini…</div>
+      </div>
+
+      <div class="card span12 error-handling-card">
+        <h2>🛡️ Penanganan Kesalahan (try / catch / finally)</h2>
+        <p class="muted">Simulasi pembagian yang aman dari error input & pembagian nol dengan logging.</p>
+        <div class="row">
+          <div class="field">
+            <label for="divA">Angka A</label>
+            <input id="divA" type="text" placeholder="misal: 10" inputmode="decimal" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="divB">Angka B</label>
+            <input id="divB" type="text" placeholder="misal: 0 → error" inputmode="decimal" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="errorType">Simulasi Error</label>
+            <select id="errorType">
+              <option value="normal">Normal Operation</option>
+              <option value="divide-zero">Division by Zero</option>
+              <option value="invalid-input">Invalid Input</option>
+              <option value="network-error">Network Error (simulasi)</option>
+            </select>
+          </div>
+          <div class="field" style="align-self: end;">
+            <button id="btnDiv" class="btn-primary">Bagi Sekarang</button>
+          </div>
+        </div>
+        <div class="stack" style="margin-top: 16px;">
+          <div id="divOut" class="eq">Hasil pembagian akan tampil di sini…</div>
+          <div id="errorLog" class="eq console" style="max-height: 150px; overflow-y: auto; font-size: 12px;">
+            <strong>🔍 Error Log & Debugging Info:</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+        &copy; 2025 <strong>Hello World</strong>. All rights reserved.  
+        Dibuat untuk demo edukasi.  
+    </footer>
+  </div>
+
+  <script>
+    // ========== Modern JavaScript Calculator & Control Structures ==========
+    
+    /**
+     * Modern ES6+ Utility Functions
+     */
+    class Utils {
+      static $ = (query, context = document) => context.querySelector(query);
+      static $$ = (query, context = document) => Array.from(context.querySelectorAll(query));
+      
+      static parseNumber(text) {
+        const sanitized = String(text).trim().replace(/,/g, ".");
+        if (sanitized === "" || isNaN(sanitized)) {
+          throw new Error("Input bukan angka yang valid");
+        }
+        return Number(sanitized);
+      }
+      
+      static formatSmart(number) {
+        if (!Number.isFinite(number)) return String(number);
+        if (Number.isInteger(number)) return String(number);
+        return Number(number.toPrecision(10)).toString();
+      }
+      
+      static async delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      
+      static debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+      
+      static log(message, type = 'info') {
+        const timestamp = new Date().toLocaleTimeString();
+        const prefix = {
+          info: '📘',
+          success: '✅',
+          warning: '⚠️',
+          error: '❌'
+        }[type] || '📘';
+        
+        console.log(`${prefix} [${timestamp}] ${message}`);
+        return `[${timestamp}] ${message}`;
+      }
+    }
+
+    /**
+     * Enhanced Calculator Class with History and Advanced Operations
+     */
+    class ModernCalculator {
+      constructor() {
+        this.history = [];
+        this.elements = {
+          numA: Utils.$('#numA'),
+          numB: Utils.$('#numB'),
+          op: Utils.$('#op'),
+          equation: Utils.$('#equation'),
+          history: Utils.$('#history'),
+          btnCalc: Utils.$('#btnCalc'),
+          btnClear: Utils.$('#btnClear'),
+          btnHistory: Utils.$('#btnHistory')
+        };
+        
+        this.operations = {
+          '+': (a, b) => a + b,
+          '-': (a, b) => a - b,
+          '*': (a, b) => a * b,
+          '/': (a, b) => {
+            if (b === 0) throw new Error("Pembagian dengan nol tidak diperbolehkan");
+            return a / b;
+          },
+          '**': (a, b) => Math.pow(a, b),
+          '%': (a, b) => {
+            if (b === 0) throw new Error("Modulo dengan nol tidak diperbolehkan");
+            return a % b;
+          }
+        };
+        
+        this.operatorSymbols = {
+          '+': '+',
+          '-': '−',
+          '*': '×',
+          '/': '÷',
+          '**': '^',
+          '%': '%'
+        };
+        
+        this.init();
+      }
+      
+      init() {
+        this.bindEvents();
+        this.loadHistory();
+      }
+      
+      bindEvents() {
+        this.elements.btnCalc.addEventListener('click', () => this.calculate());
+        this.elements.btnClear.addEventListener('click', () => this.clear());
+        this.elements.btnHistory.addEventListener('click', () => this.toggleHistory());
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && this.isCalculatorFocused()) {
+            e.preventDefault();
+            this.calculate();
+          } else if (e.key === 'Escape') {
+            this.clear();
+          }
+        });
+        
+        // Real-time validation
+        [this.elements.numA, this.elements.numB].forEach(input => {
+          input.addEventListener('input', Utils.debounce(() => this.validateInput(input), 300));
+        });
+      }
+      
+      isCalculatorFocused() {
+        const activeElement = document.activeElement;
+        return [this.elements.numA, this.elements.numB, this.elements.op].includes(activeElement);
+      }
+      
+      validateInput(input) {
+        try {
+          if (input.value.trim() !== '') {
+            Utils.parseNumber(input.value);
+            input.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+          } else {
+            input.style.borderColor = '';
+          }
+        } catch (error) {
+          input.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+        }
+      }
+      
+      async calculate() {
+        this.setLoading(true);
+        
+        try {
+          await Utils.delay(100); // Smooth loading effect
+          
+          const a = Utils.parseNumber(this.elements.numA.value);
+          const b = Utils.parseNumber(this.elements.numB.value);
+          const operator = this.elements.op.value;
+          
+          const result = this.operations[operator](a, b);
+          const expression = `${Utils.formatSmart(a)} ${this.operatorSymbols[operator]} ${Utils.formatSmart(b)} = ${Utils.formatSmart(result)}`;
+          
+          this.displayResult(expression, 'success');
+          this.addToHistory(expression);
+          
+          Utils.log(`Calculation: ${expression}`, 'success');
+          
+        } catch (error) {
+          this.displayResult(`Error: ${error.message}`, 'error');
+          Utils.log(`Calculation error: ${error.message}`, 'error');
+        } finally {
+          this.setLoading(false);
+        }
+      }
+      
+      displayResult(text, type = 'normal') {
+        this.elements.equation.textContent = text;
+        this.elements.equation.className = `eq ${type}`;
+        
+        // Animate result
+        this.elements.equation.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.elements.equation.style.transform = 'scale(1)';
+        }, 100);
+      }
+      
+      setLoading(isLoading) {
+        this.elements.btnCalc.classList.toggle('loading', isLoading);
+        this.elements.btnCalc.disabled = isLoading;
+      }
+      
+      clear() {
+        this.elements.numA.value = '';
+        this.elements.numB.value = '';
+        this.elements.numA.style.borderColor = '';
+        this.elements.numB.style.borderColor = '';
+        this.displayResult('Hasil akan tampil di sini…');
+        this.elements.numA.focus();
+      }
+      
+      addToHistory(expression) {
+        this.history.unshift({
+          expression,
+          timestamp: new Date().toLocaleString()
+        });
+        
+        // Limit history to 10 items
+        if (this.history.length > 10) {
+          this.history = this.history.slice(0, 10);
+        }
+        
+        this.saveHistory();
+        this.updateHistoryDisplay();
+      }
+      
+      toggleHistory() {
+        const historyEl = this.elements.history;
+        if (historyEl.style.display === 'none') {
+          historyEl.style.display = 'block';
+          this.updateHistoryDisplay();
+          this.elements.btnHistory.textContent = 'Sembunyikan Riwayat';
+        } else {
+          historyEl.style.display = 'none';
+          this.elements.btnHistory.textContent = 'Riwayat';
+        }
+      }
+      
+      updateHistoryDisplay() {
+        if (this.history.length === 0) {
+          this.elements.history.innerHTML = '<strong>Riwayat Perhitungan:</strong>\nBelum ada perhitungan.';
+          return;
+        }
+        
+        const historyHtml = this.history
+          .map(item => `${item.timestamp}: ${item.expression}`)
+          .join('\n');
+        
+        this.elements.history.innerHTML = `<strong>Riwayat Perhitungan:</strong>\n${historyHtml}`;
+      }
+      
+      saveHistory() {
+        try {
+          localStorage.setItem('calculatorHistory', JSON.stringify(this.history));
+        } catch (error) {
+          console.warn('Could not save history to localStorage:', error);
+        }
+      }
+      
+      loadHistory() {
+        try {
+          const saved = localStorage.getItem('calculatorHistory');
+          if (saved) {
+            this.history = JSON.parse(saved);
+          }
+        } catch (error) {
+          console.warn('Could not load history from localStorage:', error);
+          this.history = [];
+        }
+      }
+    }
+
+    /**
+     * Enhanced Control Structures with Visualization
+     */
+    class ControlStructures {
+      constructor() {
+        this.elements = {
+          nilai: Utils.$('#nilai'),
+          btnPredikat: Utils.$('#btnPredikat'),
+          predikatOut: Utils.$('#predikatOut'),
+          angkaKali: Utils.$('#angkaKali'),
+          btnTabel: Utils.$('#btnTabel'),
+          angkaPositif: Utils.$('#angkaPositif'),
+          btnWhile: Utils.$('#btnWhile'),
+          countdown: Utils.$('#countdown'),
+          btnCountdown: Utils.$('#btnCountdown'),
+          loopOut: Utils.$('#loopOut'),
+          divA: Utils.$('#divA'),
+          divB: Utils.$('#divB'),
+          errorType: Utils.$('#errorType'),
+          btnDiv: Utils.$('#btnDiv'),
+          divOut: Utils.$('#divOut'),
+          errorLog: Utils.$('#errorLog')
+        };
+        
+        this.countdownInterval = null;
+        this.init();
+      }
+      
+      init() {
+        this.bindEvents();
+        this.initErrorLog();
+      }
+      
+      bindEvents() {
+        this.elements.btnPredikat.addEventListener('click', () => this.evaluateGrade());
+        this.elements.btnTabel.addEventListener('click', () => this.generateMultiplicationTable());
+        this.elements.btnWhile.addEventListener('click', () => this.validatePositive());
+        this.elements.btnCountdown.addEventListener('click', () => this.startCountdown());
+        this.elements.btnDiv.addEventListener('click', () => this.safeDivision());
+      }
+      
+      async evaluateGrade() {
+        try {
+          const score = Utils.parseNumber(this.elements.nilai.value);
+          
+          if (score < 0 || score > 100) {
+            throw new Error("Nilai harus antara 0-100");
+          }
+          
+          let grade, gradeClass, description;
+          
+          if (score >= 90) {
+            grade = "A";
+            gradeClass = "success";
+            description = "Sangat Baik";
+          } else if (score >= 75) {
+            grade = "B";
+            gradeClass = "success";
+            description = "Baik";
+          } else if (score >= 60) {
+            grade = "C";
+            gradeClass = "warning";
+            description = "Cukup";
+          } else {
+            grade = "D";
+            gradeClass = "error";
+            description = "Kurang";
+          }
+          
+          this.elements.predikatOut.textContent = `Predikat: ${grade} (${description}) - Nilai: ${Utils.formatSmart(score)}`;
+          this.elements.predikatOut.className = `eq ${gradeClass}`;
+          
+          // Animate grade visualization
+          this.animateGradeBars(grade, score);
+          
+        } catch (error) {
+          this.elements.predikatOut.textContent = `Error: ${error.message}`;
+          this.elements.predikatOut.className = 'eq error';
+        }
+      }
+      
+      animateGradeBars(targetGrade, score) {
+        const gradeBars = Utils.$$('.grade-bar');
+        
+        // Reset all bars
+        gradeBars.forEach(bar => {
+          bar.classList.remove('active');
+          const fill = bar.querySelector('.grade-fill');
+          fill.style.width = '0%';
+        });
+        
+        // Animate target grade
+        setTimeout(() => {
+          const targetBar = Utils.$(`.grade-bar[data-grade="${targetGrade}"]`);
+          if (targetBar) {
+            targetBar.classList.add('active');
+            const fill = targetBar.querySelector('.grade-fill');
+            
+            // Calculate width based on score within grade range
+            let width = 100;
+            if (targetGrade === 'A') width = Math.min(100, (score - 90) / 10 * 100);
+            else if (targetGrade === 'B') width = Math.min(100, (score - 75) / 14 * 100);
+            else if (targetGrade === 'C') width = Math.min(100, (score - 60) / 14 * 100);
+            else if (targetGrade === 'D') width = Math.min(100, score / 59 * 100);
+            
+            fill.style.width = `${Math.max(20, width)}%`;
+          }
+        }, 200);
+      }
+      
+      async generateMultiplicationTable() {
+        try {
+          const base = Utils.parseNumber(this.elements.angkaKali.value);
+          const output = [`🔢 Tabel Perkalian ${Utils.formatSmart(base)}:`, ''];
+          
+          // Animate table generation
+          this.elements.loopOut.textContent = 'Generating table...';
+          this.elements.loopOut.className = 'eq console loading';
+          
+          for (let i = 1; i <= 10; i++) {
+            await Utils.delay(50); // Simulate processing
+            const result = base * i;
+            output.push(`${Utils.formatSmart(base)} × ${i.toString().padStart(2)} = ${Utils.formatSmart(result).padStart(6)}`);
+          }
+          
+          output.push('', '✅ Tabel selesai dibuat!');
+          
+          this.elements.loopOut.textContent = output.join('\n');
+          this.elements.loopOut.className = 'eq console success';
+          
+        } catch (error) {
+          this.elements.loopOut.textContent = `Error: ${error.message}`;
+          this.elements.loopOut.className = 'eq console error';
+        }
+      }
+      
+      validatePositive() {
+        try {
+          const number = Utils.parseNumber(this.elements.angkaPositif.value);
+          
+          let attempts = 1;
+          let currentNumber = number;
+          const output = ['🔍 Validasi While Loop:', ''];
+          
+          // Simulate while loop validation
+          while (currentNumber <= 0 && attempts <= 3) {
+            output.push(`Percobaan ${attempts}: ${Utils.formatSmart(currentNumber)} ≤ 0 (tidak valid)`);
+            currentNumber = Math.abs(currentNumber) + Math.random() * 10; // Simulate user retry
+            attempts++;
+          }
+          
+          if (currentNumber > 0) {
+            output.push(`✅ Angka ${Utils.formatSmart(currentNumber)} valid (positif)!`);
+            output.push(`Total percobaan: ${attempts - 1}`);
+            this.elements.loopOut.textContent = output.join('\n');
+            this.elements.loopOut.className = 'eq console success';
+          } else {
+            output.push('❌ Masukkan angka positif yang valid');
+            this.elements.loopOut.textContent = output.join('\n');
+            this.elements.loopOut.className = 'eq console warning';
+          }
+          
+        } catch (error) {
+          this.elements.loopOut.textContent = `Error: ${error.message}`;
+          this.elements.loopOut.className = 'eq console error';
+        }
+      }
+      
+      async startCountdown() {
+        try {
+          if (this.countdownInterval) {
+            clearInterval(this.countdownInterval);
+            this.countdownInterval = null;
+            this.elements.btnCountdown.textContent = 'Start Countdown';
+            return;
+          }
+          
+          let count = Math.floor(Utils.parseNumber(this.elements.countdown.value));
+          if (count <= 0) throw new Error("Countdown harus > 0");
+          
+          this.elements.btnCountdown.textContent = 'Stop Countdown';
+          
+          const output = ['⏱️ Countdown Timer (While Loop):', ''];
+          
+          this.countdownInterval = setInterval(() => {
+            output[output.length - 1] = `⏳ ${count}...`;
+            this.elements.loopOut.textContent = output.join('\n');
+            this.elements.loopOut.className = 'eq console countdown-display counting';
+            
+            count--;
+            
+            if (count < 0) {
+              clearInterval(this.countdownInterval);
+              this.countdownInterval = null;
+              output[output.length - 1] = '🎉 Countdown selesai!';
+              this.elements.loopOut.textContent = output.join('\n');
+              this.elements.loopOut.className = 'eq console success';
+              this.elements.btnCountdown.textContent = 'Start Countdown';
+            } else {
+              output.push('');
+            }
+          }, 1000);
+          
+        } catch (error) {
+          this.elements.loopOut.textContent = `Error: ${error.message}`;
+          this.elements.loopOut.className = 'eq console error';
+        }
+      }
+      
+      async safeDivision() {
+        const timestamp = new Date().toLocaleTimeString();
+        let logEntry = `[${timestamp}] `;
+        
+        try {
+          this.addToErrorLog(`${logEntry}🔍 Starting safe division operation...`);
+          
+          // Simulate different error types based on selection
+          const errorType = this.elements.errorType.value;
+          
+          if (errorType === 'network-error') {
+            await Utils.delay(1000);
+            throw new Error("Network connection failed (simulasi)");
+          }
+          
+          let a, b;
+          
+          if (errorType === 'invalid-input') {
+            a = 'invalid';
+            b = 'data';
+          } else {
+            a = Utils.parseNumber(this.elements.divA.value);
+            b = errorType === 'divide-zero' ? 0 : Utils.parseNumber(this.elements.divB.value);
+          }
+          
+          this.addToErrorLog(`${logEntry}📊 Input validation: a=${a}, b=${b}`);
+          
+          if (typeof a !== 'number') throw new Error("Input A tidak valid");
+          if (typeof b !== 'number') throw new Error("Input B tidak valid");
+          if (b === 0) throw new Error("Tidak bisa membagi dengan nol");
+          
+          const result = a / b;
+          
+          this.elements.divOut.textContent = `${Utils.formatSmart(a)} ÷ ${Utils.formatSmart(b)} = ${Utils.formatSmart(result)}`;
+          this.elements.divOut.className = 'eq success';
+          
+          this.addToErrorLog(`${logEntry}✅ Division successful: ${Utils.formatSmart(result)}`);
+          
+        } catch (error) {
+          this.elements.divOut.textContent = `Error: ${error.message}`;
+          this.elements.divOut.className = 'eq error';
+          
+          this.addToErrorLog(`${logEntry}❌ Error caught: ${error.message}`);
+          
+        } finally {
+          this.addToErrorLog(`${logEntry}🔄 Finally: Operation completed, resources cleaned up`);
+        }
+      }
+      
+      initErrorLog() {
+        this.elements.errorLog.innerHTML = '<strong>🔍 Error Log & Debugging Info:</strong>\nLogs will appear here...';
+      }
+      
+      addToErrorLog(message) {
+        const current = this.elements.errorLog.textContent;
+        const lines = current.split('\n');
+        
+        // Keep only header + last 10 log entries
+        if (lines.length > 12) {
+          lines.splice(2, lines.length - 12);
+        }
+        
+        lines.push(message);
+        this.elements.errorLog.textContent = lines.join('\n');
+        
+        // Auto-scroll to bottom
+        this.elements.errorLog.scrollTop = this.elements.errorLog.scrollHeight;
+      }
+    }
+
+    /**
+     * Enhanced Tab Management
+     */
+    class TabManager {
+      constructor() {
+        this.tabs = Utils.$$('.tab-btn');
+        this.panels = Utils.$$('[role="tabpanel"]');
+        this.init();
+      }
+      
+      init() {
+        this.tabs.forEach(tab => {
+          tab.addEventListener('click', (e) => this.switchTab(e.target));
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.ctrlKey && e.key >= '1' && e.key <= '2') {
+            e.preventDefault();
+            const tabIndex = parseInt(e.key) - 1;
+            if (this.tabs[tabIndex]) {
+              this.switchTab(this.tabs[tabIndex]);
+            }
+          }
+        });
+      }
+      
+      switchTab(targetTab) {
+        const targetKey = targetTab.dataset.tab;
+        
+        // Update tab states
+        this.tabs.forEach(tab => tab.setAttribute('aria-selected', 'false'));
+        targetTab.setAttribute('aria-selected', 'true');
+        
+        // Update panel visibility with animation
+        this.panels.forEach(panel => {
+          if (panel.id === `tab-${targetKey}`) {
+            panel.hidden = false;
+            panel.style.animation = 'fadeInUp 0.4s ease-out';
+          } else {
+            panel.hidden = true;
+          }
+        });
+        
+        Utils.log(`Switched to tab: ${targetKey}`, 'info');
+      }
+    }
+
+    /**
+     * Demo Button Handler
+     */
+    class DemoHandler {
+      constructor(calculator) {
+        this.calculator = calculator;
+        this.init();
+      }
+      
+      init() {
+        Utils.$$('[data-demo]').forEach(btn => {
+          btn.addEventListener('click', (e) => this.runDemo(e.target));
+        });
+      }
+      
+      async runDemo(button) {
+        const expression = button.dataset.demo;
+        const [a, operator, b] = expression.split(' ');
+        
+        // Animate demo execution
+        button.style.transform = 'scale(0.95)';
+        setTimeout(() => button.style.transform = 'scale(1)', 150);
+        
+        // Fill form and calculate
+        this.calculator.elements.numA.value = a;
+        this.calculator.elements.op.value = operator;
+        this.calculator.elements.numB.value = b;
+        
+        await Utils.delay(200);
+        this.calculator.calculate();
+        
+        Utils.log(`Demo executed: ${expression}`, 'success');
+      }
+    }
+
+    /**
+     * Initialize Application
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      Utils.log('🚀 Initializing Modern Calculator App...', 'info');
+      
+      const tabManager = new TabManager();
+      const calculator = new ModernCalculator();
+      const controlStructures = new ControlStructures();
+      const demoHandler = new DemoHandler(calculator);
+      
+      // Global keyboard shortcuts info
+      console.log(`
+        🎯 Keyboard Shortcuts:
+        • Enter: Calculate (when calculator focused)
+        • Escape: Clear calculator
+        • Ctrl+1: Switch to Calculator tab
+        • Ctrl+2: Switch to Control Structures tab
+      `);
+      
+      Utils.log('✅ Application initialized successfully!', 'success');
+    });
+  </script>
+</body>
+</html>
